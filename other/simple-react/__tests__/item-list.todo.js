@@ -1,3 +1,4 @@
+// hi
 // Your job:
 // Test the case where the items provided is empty:
 //   <ItemList items={[]} />
@@ -8,13 +9,27 @@
 // to testing react components.
 
 // So you can use JSX (which transpiles down to React.createElement):
-// import React from 'react'
+import React from 'react'
 //
 // So you can render the component for testing:
-// import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom'
 //
 // So you can create a react element for the component you're testing:
-// import ItemList from '../item-list'
+import ItemList from '../item-list'
+
+test('renders "no items" when no items are given', () => {
+  const container = document.createElement('div')
+  ReactDOM.render(<ItemList items={[]} />, container)
+  expect(container.textContent).toMatch('no items')
+})
+
+test('renders the items given', () => {
+  const container = document.createElement('div')
+  ReactDOM.render(<ItemList items={['dog', 'cat', 'bear']} />, container)
+  expect(container.textContent).toMatch('dog')
+  expect(container.textContent).toMatch('cat')
+  expect(container.textContent).toMatch('bear')
+})
 
 // and here's an outline example of your first test:
 //   Create a "container" to render your component into (💰 use document.createElement('div'))
