@@ -18,8 +18,13 @@ import ReactDOM from 'react-dom'
 import ItemList from '../item-list'
 
 test('renders "no items" when no items are given', () => {
+  // arrange
   const container = document.createElement('div')
+
+  // act
   ReactDOM.render(<ItemList items={[]} />, container)
+
+  // assert
   expect(container.textContent).toMatch('no items')
 })
 
