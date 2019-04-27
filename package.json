@@ -114,6 +114,9 @@
       "prefer-object-spread": "off"
     }
   },
+  "jest": {
+    "testEnvironment": "node"
+  },
   "eslintIgnore": [
     "node_modules",
     "build",
