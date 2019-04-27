@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import * as utilsMock from '../../utils/api'
 import Editor from '../editor.todo'
 
 jest.mock('../../utils/api', () => ({
@@ -8,7 +9,13 @@ jest.mock('../../utils/api', () => ({
   }
 }))
 
-test('calls onSubmit with the username and password when submitted', () => {
+const flushPromises = () => {
+  return new Promise(resolve => {
+    setTimeout(resolve, 0)
+  })
+}
+
+test('calls onSubmit with the username and password when submitted', async () => {
   const container = document.createElement('div')
   const fakeUser = { id: 'foobar' }
   const fakeHistory = {
@@ -23,6 +30,19 @@ test('calls onSubmit with the username and password when submitted', () => {
 
   const submit = new window.Event('submit')
   form.dispatchEvent(submit)
+
+  await flushPromises()
+
+  expect(fakeHistory.push).toHaveBeenCalledTimes(1)
+  expect(fakeHistory.push).toHaveBeenCalledWith('/')
+  expect(utilsMock.posts.create).toHaveBeenCalledTimes(1)
+  expect(utilsMock.posts.create).toHaveBeenCalledWith({
+    authorId: fakeUser.id,
+    title: title.value,
+    content: content.value,
+    tags: ['twix', 'my', 'likes'],
+    date: expect.any(String)
+  })
 
 
   // const title = container.
